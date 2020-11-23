@@ -5,6 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @FileName: ChatServer.java
@@ -19,9 +21,12 @@ public class ChatServer {
     private ServerSocket serverSocket;
     // key为端口号，value为服务器对应的输出流
     private Map<Integer, Writer> connectedClients;
+    private ExecutorService executorService;
 
     public ChatServer() {
         this.connectedClients = new HashMap<>();
+        // 创建固定为10个线程的线程池
+        this.executorService = Executors.newFixedThreadPool(10);
     }
 
     /**
@@ -82,7 +87,9 @@ public class ChatServer {
                 Socket socket = serverSocket.accept();
                 System.out.println("连接上客户端，端口：" + socket.getPort());
                 // 调用charHandler处理客户端事件
-                new Thread(new ChatHandler(this, socket)).start();
+                // 用线程池优化，实现伪异步IO
+                executorService.execute(new ChatHandler(this, socket));
+                // new Thread(new ChatHandler(this, socket)).start();
             }
         } catch (IOException e) {
             e.printStackTrace();
