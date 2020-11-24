@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/aio-tutorial/aio-tutorial.iml" filepath="$PROJECT_DIR$/aio-tutorial/aio-tutorial.iml" />
       <module fileurl="file://$PROJECT_DIR$/chatroom.iml" filepath="$PROJECT_DIR$/chatroom.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nio-chatroom/nio-chatroom.iml" filepath="$PROJECT_DIR$/nio-chatroom/nio-chatroom.iml" />
     </modules>
   </component>
 </project>
